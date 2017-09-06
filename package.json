@@ -1,0 +1,23 @@
+{
+  "name": "code-against-humanity",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "material-ui": "^0.19.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.13",
+    "react-syntax-highlighter": "^5.7.0",
+    "styled-components": "^2.1.2",
+    "twilio": "^3.6.5",
+    "twilio-sync": "^0.5.10"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
