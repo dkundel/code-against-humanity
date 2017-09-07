@@ -1,5 +1,7 @@
 {
   "name": "code-against-humanity",
+  "main": "server/index.js",
+  "license": "MIT",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,14 +18,27 @@
     "twilio": "^3.6.5",
     "twilio-sync": "^0.5.10"
   },
+  "proxy": "http://localhost:4000",
+  "nodemonConfig": {
+    "watch": ["server"]
+  },
   "scripts": {
-    "start": "react-scripts start",
+    "start:dev:server": "nodemon --exec \"nodenv -f\" .",
+    "start:dev:client": "react-scripts start",
+    "start:dev": "npm-run-all -p start:dev:*",
+    "start:prod": "node .",
+    "start":
+      "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "ncp .env.example .env"
   },
   "devDependencies": {
     "if-env": "^1.0.0",
-    "node-env-run": "^2.0.1"
+    "ncp": "^2.0.0",
+    "node-env-run": "^2.0.1",
+    "nodemon": "^1.12.0",
+    "npm-run-all": "^4.1.1"
   }
 }
