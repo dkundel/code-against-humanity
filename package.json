@@ -32,7 +32,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "postinstall": "ncp .env.example .env"
+    "postinstall": "npm-run-all copyenv build",
+    "copyenv": "ncp .env.example .env"
   },
   "devDependencies": {
     "if-env": "^1.0.0",
