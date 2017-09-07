@@ -1,18 +1,20 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const twilio = require('twilio');
+
+const game = require('./game');
 
 const PORT = process.env.PORT || 4000;
 
 const app = express();
-const client = twilio(
-  process.env.TWILIO_API_KEY,
-  process.env.TWILIO_API_SECRET,
-  { accountSid: process.env.TWILIO_AUTH_TOKEN }
-);
 
-app.get('/token', require('./token'));
+app.use(bodyParser.json());
+app.get('/api/token', require('./token'));
+app.post('/api/game/create', game.create);
+app.post('/api/game/join', game.join);
+app.post('/api/game/finish', game.finish);
+app.post('/api/game/judge', game.judge);
+app.post('/api/game/start', game.start);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'build')));
