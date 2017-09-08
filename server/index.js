@@ -14,6 +14,7 @@ app.post('/api/game/create', game.create);
 app.post('/api/game/join', game.join);
 app.post('/api/game/finish', game.finish);
 app.post('/api/game/judge', game.judge);
+app.post('/api/game/submit', game.submit);
 app.post('/api/game/start', game.start);
 
 if (process.env.NODE_ENV === 'production') {
