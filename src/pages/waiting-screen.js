@@ -22,7 +22,8 @@ class WaitingScreen extends Component {
       confirmText,
       cancelText,
       onConfirm,
-      onCancel
+      onCancel,
+      children
     } = this.props;
 
     const hasConfirmButton =
@@ -33,7 +34,7 @@ class WaitingScreen extends Component {
     return (
       <Paper zDepth={1} style={{ padding: 10, marginBottom: 20 }}>
         <H3>Waiting...</H3>
-        <MutedText>{message}</MutedText>
+        {message ? <MutedText>{message}</MutedText> : children}
         <Center>
           <CircularProgress />
         </Center>

@@ -9,12 +9,13 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { red500, grey500, grey800, white } from 'material-ui/styles/colors';
 
 import { H3, MutedText } from '../components/common';
+import { post } from '../lib/utils';
 
 class NewGame extends Component {
   constructor(...args) {
     super(...args);
     this.state = {
-      roomId: ''
+      username: ''
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -28,11 +29,26 @@ class NewGame extends Component {
     this.setState({ [name]: value });
   }
 
-  createGame() {
-    const { roomId } = this.state;
+  async createGame() {
+    const { username } = this.state;
     const { history } = this.props;
 
-    console.log('Creating room...');
+    if (history === undefined) {
+      console.error('Not part of a route component');
+      return;
+    }
+
+    const resp = await post(`/api/game/create`, { username });
+
+    if (!resp.ok) {
+      const msg = await resp.text();
+      console.error(msg);
+      return;
+    }
+
+    const { roomId } = await resp.json();
+    localStorage.setItem(`user:${roomId}`, username);
+    history.push(`/game/${roomId}`);
   }
 
   render() {
@@ -43,7 +59,7 @@ class NewGame extends Component {
           floatingLabelText="Choose your name:"
           floatingLabelFixed
           fullWidth
-          name="roomId"
+          name="username"
           onChange={this.handleInputChange}
         />
         <RaisedButton

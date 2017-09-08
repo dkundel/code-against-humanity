@@ -8,6 +8,24 @@ import CodeBlock from '../components/code-block';
 import { H3, H4 } from '../components/common';
 
 class Challenge extends Component {
+  constructor(...args) {
+    super(...args);
+    this.state = {
+      currentValue: undefined
+    };
+    this.submit = this.submit.bind(this);
+    this.updateInput = this.updateInput.bind(this);
+  }
+
+  updateInput(evt) {
+    const currentValue = evt.target.value;
+    this.setState({ currentValue });
+  }
+
+  submit() {
+    this.props.onSubmit({ submission: this.state.currentValue });
+  }
+
   render() {
     const { code, title } = this.props;
     return (
@@ -20,8 +38,13 @@ class Challenge extends Component {
           floatingLabelFixed={true}
           floatingLabelText="Enter your comment:"
           fullWidth={true}
+          onChange={this.updateInput}
         />
-        <RaisedButton primary={true} style={{ marginTop: 10 }}>
+        <RaisedButton
+          primary={true}
+          style={{ marginTop: 10 }}
+          onClick={this.submit}
+        >
           Submit
         </RaisedButton>
       </Paper>

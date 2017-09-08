@@ -12,6 +12,7 @@ import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 import { red500, grey500, grey800, white } from 'material-ui/styles/colors';
 
 import { H3, MutedText } from '../components/common';
+import { post } from '../lib/utils';
 
 class JoinGame extends Component {
   constructor(...args) {
@@ -32,11 +33,9 @@ class JoinGame extends Component {
     this.setState({ [name]: value });
   }
 
-  joinGame() {
+  async joinGame() {
     const { username, roomId } = this.state;
     const { history } = this.props;
-
-    console.log(username, roomId);
 
     if (
       typeof roomId !== 'string' ||
@@ -47,9 +46,22 @@ class JoinGame extends Component {
       return;
     }
 
-    if (history) {
-      history.push(`/game/${roomId}`);
+    if (history === undefined) {
+      console.error('Not part of a route component');
+      return;
     }
+
+    const resp = await post(`/api/game/join`, { username, roomId });
+
+    if (!resp.ok) {
+      const msg = await resp.text();
+      console.error(msg);
+      return;
+    }
+
+    const data = await resp.json();
+    localStorage.setItem(`user:${data.roomId}`, data.username);
+    history.push(`/game/${data.roomId}`);
   }
 
   render() {

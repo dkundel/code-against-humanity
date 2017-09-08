@@ -32,7 +32,7 @@ class ScoreScreen extends Component {
       return (
         <div>
           <ListItem
-            primaryText={person.name}
+            primaryText={person.username}
             leftAvatar={standing}
             rightAvatar={score}
             disabled={true}

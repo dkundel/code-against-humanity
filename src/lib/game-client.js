@@ -31,9 +31,10 @@ class GameClient {
     this.identity = identity;
     this.accessManager = this.createAccessManager(token);
     this.client = this.createClient(token);
-    this.gameDoc = this.client.document(roomId);
+    this.gameDoc = await this.client.document(`game:${roomId}`);
     this.game = this.gameDoc.value;
     this.addEventListeners();
+    return this.game;
   }
 
   getGame() {
@@ -60,7 +61,7 @@ class GameClient {
       this.emit('updated', { game: data });
     });
 
-    this.gameDoc.on('updated', data => {
+    this.gameDoc.on('updatedRemotely', data => {
       this.game = data;
       this.emit('updated', { game: data });
     });
@@ -79,7 +80,7 @@ class GameClient {
   }
 
   createClient(token) {
-    const client = new GameClient(token);
+    const client = new SyncClient(token);
     client.on('connectionStateChanged', ({ connectionState }) => {
       if (
         connectionState === 'disconnected' ||

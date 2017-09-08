@@ -16,6 +16,12 @@ class Judging extends Component {
 
     this.state = this.state || {};
     this.state.currentlySelected = null;
+
+    this.submit = this.submit.bind(this);
+  }
+
+  submit() {
+    this.props.onSubmit({ winner: this.state.currentlySelected });
   }
 
   render() {
@@ -53,7 +59,7 @@ class Judging extends Component {
           <Divider />
           {listEntries}
         </List>
-        <RaisedButton primary={true} fullWidth={true}>
+        <RaisedButton primary={true} fullWidth={true} onClick={this.submit}>
           Submit
         </RaisedButton>
       </Paper>
