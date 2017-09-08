@@ -17,3 +17,5 @@ export const MutedText = styled.p`
   color: ${grey500};
   font-size: 0.8em;
 `;
+
+export const Li = styled.li``;
