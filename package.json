@@ -8,6 +8,7 @@
     "body-parser": "^1.17.2",
     "event-emitter": "^0.3.5",
     "express": "^4.15.4",
+    "lodash-es": "^4.17.4",
     "material-ui": "^0.19.1",
     "query-string": "^5.0.0",
     "react": "^15.6.1",
@@ -23,20 +24,19 @@
   },
   "proxy": "http://localhost:4000",
   "nodemonConfig": {
-    "watch": [
-      "server"
-    ]
+    "watch": ["server"]
   },
   "scripts": {
     "start:dev:server": "nodemon --exec \"nodenv -f\" .",
     "start:dev:client": "react-scripts start",
     "start:dev": "npm-run-all -p start:dev:*",
     "start:prod": "node .",
-    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start":
+      "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "postinstall": "npm-run-all copyenv build",
+    "postinstall": "npm-run-all build",
     "copyenv": "ncp .env.example .env"
   },
   "devDependencies": {
