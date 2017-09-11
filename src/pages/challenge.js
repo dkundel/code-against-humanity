@@ -44,9 +44,8 @@ class Challenge extends Component {
           primary={true}
           style={{ marginTop: 10 }}
           onClick={this.submit}
-        >
-          Submit
-        </RaisedButton>
+          label="Submit"
+        />
       </Paper>
     );
   }

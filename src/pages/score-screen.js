@@ -12,7 +12,7 @@ import { H3, MutedText } from '../components/common';
 
 class ScoreScreen extends Component {
   render() {
-    const { standings, gameOver } = this.props;
+    const { standings, gameOver, showButton, onClick } = this.props;
     const standingEntries = standings.map((person, idx) => {
       let standing = (
         <Avatar color={red500} backgroundColor={white}>
@@ -47,9 +47,14 @@ class ScoreScreen extends Component {
         <H3>Standings</H3>
         <MutedText>{gameOver ? GAME_OVER : NEXT_ROUND}</MutedText>
         <List>{standingEntries}</List>
-        <FlatButton primary={true} fullWidth={true}>
-          {gameOver ? BUTTON.GAME_OVER : BUTTON.NEXT_ROUND}
-        </FlatButton>
+        {showButton && (
+          <FlatButton
+            primary={true}
+            fullWidth={true}
+            onClick={onClick}
+            label={gameOver ? BUTTON.GAME_OVER : BUTTON.NEXT_ROUND}
+          />
+        )}
       </Paper>
     );
   }

@@ -59,9 +59,12 @@ class Judging extends Component {
           <Divider />
           {listEntries}
         </List>
-        <RaisedButton primary={true} fullWidth={true} onClick={this.submit}>
-          Submit
-        </RaisedButton>
+        <RaisedButton
+          primary={true}
+          fullWidth={true}
+          onClick={this.submit}
+          label="Submit Vote"
+        />
       </Paper>
     );
   }

@@ -15,16 +15,27 @@ import Welcome from './pages/welcome';
 import Game from './pages/game';
 
 import Footer from './components/footer';
+import { H1 } from './components/common';
 
-const Title = styled.h1``;
+import Theme from './lib/theme';
+
+const Title = H1.extend``;
 const AppContainer = styled.div`padding: 20px 10px;`;
+
+const LogoContainer = styled.div`
+  text-align: center;
+  width: 100%;
+`;
+const Logo = styled.img`max-width: 250px;`;
 
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={Theme}>
         <AppContainer>
-          <Title>Code against Humanity</Title>
+          <LogoContainer>
+            <Logo src="/cah-logo.png" alt="Code against Humanity" />
+          </LogoContainer>
           <Router>
             <div>
               <Route path="/" exact component={Welcome} />

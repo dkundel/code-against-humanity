@@ -10,7 +10,7 @@ import { MutedText } from './common';
 
 class SubmissionEntry extends Component {
   render() {
-    const { selected, onSelect, children } = this.props;
+    const { selected, onSelect, children, key, hideHeart } = this.props;
 
     const Icon = selected ? (
       <ActionFavorite color={red500} />
@@ -21,8 +21,9 @@ class SubmissionEntry extends Component {
     return (
       <ListItem
         primaryText={<MutedText>{children}</MutedText>}
-        rightIcon={Icon}
+        rightIcon={!hideHeart && Icon}
         onClick={() => onSelect()}
+        key={'entry' + key}
       />
     );
   }

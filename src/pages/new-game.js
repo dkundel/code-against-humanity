@@ -67,11 +67,10 @@ class NewGame extends Component {
           fullWidth
           style={{ marginBottom: 10 }}
           onClick={this.createGame}
-        >
-          Start
-        </RaisedButton>
+          label="Start"
+        />
         <Link to="/">
-          <FlatButton fullWidth>Cancel</FlatButton>
+          <FlatButton fullWidth label="Cancel" />
         </Link>
       </Paper>
     );

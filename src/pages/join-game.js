@@ -87,11 +87,10 @@ class JoinGame extends Component {
           fullWidth
           style={{ marginBottom: 10 }}
           onClick={this.joinGame}
-        >
-          Start
-        </RaisedButton>
+          label="Join"
+        />
         <Link to="/">
-          <FlatButton fullWidth>Cancel</FlatButton>
+          <FlatButton fullWidth label="Cancel" />
         </Link>
       </Paper>
     );

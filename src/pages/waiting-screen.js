@@ -39,14 +39,20 @@ class WaitingScreen extends Component {
           <CircularProgress />
         </Center>
         {hasConfirmButton && (
-          <RaisedButton primary fullWidth onClick={onConfirm}>
-            {confirmText}
-          </RaisedButton>
+          <RaisedButton
+            primary
+            fullWidth
+            onClick={onConfirm}
+            label={confirmText}
+          />
         )}
         {hasCancelButton && (
-          <FlatButton fullWidth onClick={onCancel} style={{ marginTop: 20 }}>
-            {cancelText}
-          </FlatButton>
+          <FlatButton
+            fullWidth
+            onClick={onCancel}
+            style={{ marginTop: 20 }}
+            label={cancelText}
+          />
         )}
       </Paper>
     );
