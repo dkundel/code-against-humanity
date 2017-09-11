@@ -50,7 +50,7 @@ class GameClient {
       return;
     }
 
-    this.gameDoc.update({
+    return this.gameDoc.update({
       [key]: value
     });
   }
