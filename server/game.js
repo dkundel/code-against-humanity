@@ -1,5 +1,7 @@
 const twilio = require('twilio');
 
+const NUM_OF_ROUNDS = 3;
+
 const client = twilio(
   process.env.TWILIO_API_KEY,
   process.env.TWILIO_API_SECRET,
@@ -43,6 +45,11 @@ async function join(req, res) {
       return;
     }
 
+    if (data.status !== 'open') {
+      res.status(400).send('The game is already full');
+      return;
+    }
+
     data.standings.push({ username, score: 0 });
     if (data.standings.length === 5) {
       data.status = 'waitingToStart';
@@ -81,6 +88,9 @@ async function judge(req, res) {
     data.status = 'showStandings';
     data.currentSubmissions = [];
     data.pastCodeSnippets.push(id);
+    if (data.pastCodeSnippets.length >= NUM_OF_ROUNDS) {
+      data.status = 'gameover';
+    }
     await docInstance.update({ data });
     res.send({});
   } catch (err) {
