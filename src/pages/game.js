@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { stringify } from 'query-string';
-import { sortBy } from 'lodash-es';
+import { orderBy } from 'lodash-es';
+import styled from 'styled-components';
 
 import Paper from 'material-ui/Paper';
 
@@ -12,7 +13,13 @@ import WaitingScreen from './waiting-screen';
 import Challenge from './challenge';
 import Judging from './judging';
 import ScoreScreen from './score-screen';
+import WaitJudgingScreen from './wait-judging-screen';
 import GameClient from '../lib/game-client';
+
+const RoomCode = styled.code`
+  font-size: 18px;
+  font-weight: 200;
+`;
 
 class Game extends Component {
   constructor(...args) {
@@ -29,6 +36,8 @@ class Game extends Component {
     this.startGame = this.startGame.bind(this);
     this.judgeSubmissions = this.judgeSubmissions.bind(this);
     this.submitAnswer = this.submitAnswer.bind(this);
+    this.startNextRound = this.startNextRound.bind(this);
+    this.finishGame = this.finishGame.bind(this);
   }
 
   async componentDidMount() {
@@ -48,6 +57,12 @@ class Game extends Component {
 
     const game = client.getGame();
     this.setState({ game });
+  }
+
+  componentWillUpdate(_, nextState) {
+    if (nextState.game.status === 'finished') {
+      this.props.history.push('/');
+    }
   }
 
   async startGame() {
@@ -80,7 +95,16 @@ class Game extends Component {
     }
   }
 
+  async startNextRound() {
+    GameClient.shared().set('status', 'submitting');
+  }
+
+  async finishGame() {
+    GameClient.shared().set('status', 'finished');
+  }
+
   render() {
+    console.log(this.state.game);
     if (this.shouldRenderWaitingForUsers()) {
       return this.renderWaitingForUsers();
     }
@@ -117,7 +141,7 @@ class Game extends Component {
       return this.renderWaitingForJudging();
     }
 
-    return <pre>{JSON.stringify(this.state.game, '\n')}</pre>;
+    return <div />;
   }
 
   renderWaitingForUsers() {
@@ -169,7 +193,7 @@ class Game extends Component {
         onConfirm={() => this.startGame()}
       >
         <H4>
-          Room ID: <code>{this.state.roomId}</code>
+          Room ID: <RoomCode>{this.state.roomId}</RoomCode>
         </H4>
         <MutedText>
           Still waiting for folks to join. Give them the room ID above to join
@@ -187,12 +211,27 @@ class Game extends Component {
   }
 
   renderScoreScreen() {
-    const standings = sortBy(this.state.game.standings, ['score']);
-    return <ScoreScreen standings={standings} gameOver={false} />;
+    const standings = orderBy(this.state.game.standings, ['score'], ['desc']);
+    return (
+      <ScoreScreen
+        standings={standings}
+        gameOver={false}
+        showButton={this.isCreator()}
+        onClick={this.startNextRound}
+      />
+    );
   }
 
   renderFinishGame() {
-    return <h3>Todo</h3>;
+    const standings = orderBy(this.state.game.standings, ['score'], ['desc']);
+    return (
+      <ScoreScreen
+        standings={standings}
+        gameOver={true}
+        showButton={this.isCreator()}
+        onClick={this.finishGame}
+      />
+    );
   }
 
   renderSubmissionsScreen() {
@@ -234,7 +273,13 @@ class Game extends Component {
   }
 
   renderWaitingForJudging() {
-    return <h3>Todo</h3>;
+    const { currentQuestion, currentSubmissions } = this.state.game;
+    return (
+      <WaitJudgingScreen
+        code={currentQuestion.snippet}
+        submissions={currentSubmissions}
+      />
+    );
   }
 
   isGameStatus(status) {
@@ -298,42 +343,3 @@ class Game extends Component {
 }
 
 export default Game;
-
-/* {/* <Challenge code={codeString} title="Challenge #1" /> }
-          {/* <Judging
-            code={codeString}
-            title="Challenge #1"
-            submissions={exampleSubmissions}
-          /> }
-          {/* <ScoreScreen standings={standings} gameOver={false} /> }
-          {/* <JoinGame /> }
-          {/* <WaitingScreen
-            message="We are currently waiting for 1 more member"
-            confirmText="Let's go!"
-            cancelText="Whatever"
-          /> } */
-
-const codeString = `
-          function random() {
-            return 4;
-          }`.trim();
-
-const exampleComments = [
-  'Hello this is a very very very long comment',
-  'This is a shorter one',
-  'Hello hello',
-  'Whaaaaaats up?'
-];
-
-const exampleSubmissions = exampleComments.map((s, idx) => ({
-  id: idx,
-  comment: s
-}));
-
-const standings = [
-  { score: 500, name: 'Some Name' },
-  { score: 400, name: 'Some Other Name' },
-  { score: 300, name: 'Another Name' },
-  { score: 99, name: 'Luke Skywalker' },
-  { score: 9, name: 'Darth Vader' }
-];
