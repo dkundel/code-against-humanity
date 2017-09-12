@@ -26,7 +26,10 @@ class Welcome extends Component {
         <MutedText>Welcome to Code against Humanity.</MutedText>
         <MutedText>
           This is a multiplayer game where you will be prompted with different
-          code snippets. You'll have to write a comment at a specified place.
+          code snippets. You'll have to write a comment or name
+          function/variable where you'll find ???.
+        </MutedText>
+        <MutedText>
           Afterwards one of you will judge which one was the funniest. The
           person with the funniest comment will get a point and be the judge in
           the next round!
