@@ -50,7 +50,13 @@ NODE_ENV=production npm start
 
 Navigate to https://localhost:4000. You can also use a tool like [ngrok](https://ngrok.com) to tunnel your localhost to make it available to others.
 
-## 7. Run in dev mode
+## 7. Deploy via Heroku
+
+Alternatively you can deploy the app via Heroku. Simply click the button below:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+## 8. Run in dev mode
 
 If you want to run the code in dev mode run:
 
