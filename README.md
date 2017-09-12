@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/cah-logo.png">
+  <img src="public/cah-logo.png" width="350">
 </p>
 
 # About
