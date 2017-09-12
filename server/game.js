@@ -1,6 +1,10 @@
+const fs = require('fs');
+const path = require('path');
+const { promisify } = require('util');
 const twilio = require('twilio');
 
 const NUM_OF_ROUNDS = 3;
+const SNIPPET_PATH = path.join(__dirname, '..', 'snippets');
 
 const client = twilio(
   process.env.TWILIO_API_KEY,
@@ -8,6 +12,8 @@ const client = twilio(
   { accountSid: process.env.TWILIO_ACCOUNT_SID }
 );
 
+const readdir = promisify(fs.readdir);
+const readFile = promisify(fs.readFile);
 const syncClient = client.sync.services(process.env.TWILIO_SYNC_SERVICE);
 
 async function create(req, res) {
@@ -82,13 +88,15 @@ async function judge(req, res) {
     const winningPlayer = data.standings[idx];
     winningPlayer.score++;
     data.standings[idx] = winningPlayer;
-    const { snippet, id, title } = getCodeSnippet(data.pastSnippets);
-    data.currentQuestion = { snippet, title };
+    const { snippet, id, title, language } = await getCodeSnippet(
+      data.pastSnippets
+    );
+    data.currentQuestion = { snippet, title, language };
     data.currentJudge = winner;
     data.status = 'showStandings';
     data.currentSubmissions = [];
     data.pastCodeSnippets.push(id);
-    if (data.pastCodeSnippets.length >= NUM_OF_ROUNDS) {
+    if (data.pastCodeSnippets.length > NUM_OF_ROUNDS) {
       data.status = 'gameover';
     }
     await docInstance.update({ data });
@@ -135,14 +143,16 @@ async function start(req, res) {
       return;
     }
     const { username: currentJudge } = pickRandomMember(data.standings);
-    const { snippet, id, title } = getCodeSnippet(data.pastSnippets);
+    const { snippet, id, title, language } = await getCodeSnippet(
+      data.pastSnippets
+    );
     const currentSubmissions = [];
     const pastCodeSnippets = [id];
     const status = 'submitting';
     const newData = {
       ...data,
       currentJudge,
-      currentQuestion: { snippet, title },
+      currentQuestion: { snippet, title, language },
       currentSubmissions,
       pastCodeSnippets,
       status
@@ -177,16 +187,44 @@ function getInitialData(username) {
   };
 }
 
-function getCodeSnippet(pastSnippets) {
+async function getCodeSnippet(pastSnippets) {
+  pastSnippets = pastSnippets || [];
+  const filePaths = await readdir(SNIPPET_PATH);
+  console.log(filePaths);
+  const availableSnippets = filePaths
+    .map(p => path.basename(p, '.snippet'))
+    .map(id => parseInt(id))
+    .filter(id => !isNaN(id))
+    .filter(id => !pastSnippets.includes(id));
+
+  const random = Math.floor(Math.random() * availableSnippets.length);
+  const id = availableSnippets[random];
+  const content = await readFile(
+    path.join(SNIPPET_PATH, `${id}.snippet`),
+    'utf8'
+  );
+  const { title, snippet, language } = parseSnippetFile(content);
   return {
-    id: 0,
-    title: 'Snippet #1',
-    snippet: `function random() {
-  // ???
-  const random = 4;
-  return random;
-}`
+    id,
+    title,
+    snippet,
+    language
   };
+}
+
+function parseSnippetFile(c) {
+  const indexOfLanguage = c.indexOf('LANGUAGE:');
+  const indexOfCode = c.indexOf('CODE:');
+  const title = c
+    .substr(0, indexOfLanguage)
+    .substr('TITLE:'.length)
+    .trim();
+  const language = c
+    .substr(indexOfLanguage, c.indexOf('\n', indexOfLanguage) - indexOfLanguage)
+    .substr('LANGUAGE:'.length)
+    .trim();
+  const snippet = c.substr(indexOfCode + 'CODE:'.length).trim();
+  return { title, snippet, language };
 }
 
 function pickRandomMember(members) {

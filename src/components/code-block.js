@@ -2,9 +2,9 @@ import React from 'react';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/styles';
 
-const CodeBlock = ({ code }) => {
+const CodeBlock = ({ code, language }) => {
   return (
-    <SyntaxHighlighter language="javascript" style={dracula}>
+    <SyntaxHighlighter language={language || 'javascript'} style={dracula}>
       {code}
     </SyntaxHighlighter>
   );

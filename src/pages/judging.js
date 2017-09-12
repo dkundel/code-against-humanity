@@ -25,7 +25,7 @@ class Judging extends Component {
   }
 
   render() {
-    const { code, title, submissions } = this.props;
+    const { code, title, submissions, language } = this.props;
     const { currentlySelected } = this.state;
 
     const listEntries = submissions.map(s => {
@@ -52,7 +52,7 @@ class Judging extends Component {
         <H4>Judging Submission:</H4>
         <H3>{title}</H3>
         <Paper zDepth={2}>
-          <CodeBlock code={code} />
+          <CodeBlock code={code} language={language} />
         </Paper>
         <H4>Submissions:</H4>
         <List>

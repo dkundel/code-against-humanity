@@ -27,12 +27,12 @@ class Challenge extends Component {
   }
 
   render() {
-    const { code, title } = this.props;
+    const { code, title, language } = this.props;
     return (
       <Paper zDepth={1} style={{ padding: 10, marginBottom: 20 }}>
         <H3>{title}</H3>
         <Paper zDepth={2}>
-          <CodeBlock code={code} />
+          <CodeBlock code={code} language={language} />
         </Paper>
         <TextField
           floatingLabelFixed={true}

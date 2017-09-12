@@ -240,6 +240,7 @@ class Game extends Component {
       <Challenge
         code={currentQuestion.snippet}
         title={currentQuestion.title}
+        language={currentQuestion.language}
         onSubmit={this.submitAnswer}
       />
     );
@@ -254,7 +255,10 @@ class Game extends Component {
           Waiting for submissions for {currentQuestion.title}
         </MutedText>
         <Paper zDepth={2}>
-          <CodeBlock code={currentQuestion.snippet} />
+          <CodeBlock
+            code={currentQuestion.snippet}
+            language={currentQuestion.language}
+          />
         </Paper>
       </WaitingScreen>
     );
@@ -266,6 +270,7 @@ class Game extends Component {
       <Judging
         code={currentQuestion.snippet}
         title={currentQuestion.title}
+        language={currentQuestion.language}
         submissions={currentSubmissions}
         onSubmit={this.judgeSubmissions}
       />
@@ -277,6 +282,7 @@ class Game extends Component {
     return (
       <WaitJudgingScreen
         code={currentQuestion.snippet}
+        language={currentQuestion.language}
         submissions={currentSubmissions}
       />
     );

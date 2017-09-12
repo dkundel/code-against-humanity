@@ -10,7 +10,7 @@ import SubmissionEntry from '../components/submission-entry';
 
 import WaitingScreen from './waiting-screen';
 
-const WaitJudgingScreen = function({ submissions, code }) {
+const WaitJudgingScreen = function({ submissions, code, language }) {
   const listEntries = submissions.map(s => (
     <div>
       <SubmissionEntry key={s.id} hideHeart={true}>
@@ -25,7 +25,7 @@ const WaitJudgingScreen = function({ submissions, code }) {
         The judge is currently the submissions. Here are the submissions:
       </MutedText>
       <Paper zDepth={2}>
-        <CodeBlock code={code} />
+        <CodeBlock code={code} language={language} />
       </Paper>
       <List>{listEntries}</List>
     </WaitingScreen>
