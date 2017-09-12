@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import About from './pages/about';
 import Challenge from './pages/challenge';
 import Judging from './pages/judging';
 import ScoreScreen from './pages/score-screen';
@@ -39,6 +40,7 @@ class App extends Component {
           <Router>
             <div>
               <Route path="/" exact component={Welcome} />
+              <Route path="/about" component={About} />
               <Route path="/join" component={JoinGame} />
               <Route path="/create" component={NewGame} />
               <Route path="/game/:id" component={Game} />
