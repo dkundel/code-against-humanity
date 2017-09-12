@@ -1,0 +1,39 @@
+{
+  "name": "Code against Humanity",
+  "description":
+    "This is a game similar to Cards against Humanity or Quiplash with commenting code snippets",
+  "logo":
+    "https://github.com/dkundel/code-against-humanity/raw/master/public/cah-logo.png",
+  "keywords": ["node", "express", "twilio", "sync"],
+  "website": "https://github.com/dkundel",
+  "repository": "https://github.com/dkundel/code-against-humanity",
+  "success_url": "/",
+  "addons": [],
+  "env": {
+    "NUM_OF_ROUNDS": {
+      "description":
+        "Number of rounds that should be played. Can't be longer than the number of snippets.",
+      "required": false,
+      "value": "3"
+    },
+    "TWILIO_ACCOUNT_SID": {
+      "description": "Your Twilio Account SID. www.twilio.com/console",
+      "required": true
+    },
+    "TWILIO_API_KEY": {
+      "description":
+        "Your Twilio API Key. www.twilio.com/console/dev-tools/api-keys",
+      "required": true
+    },
+    "TWILIO_API_SECRET": {
+      "description":
+        "Your Twilio API Secret. www.twilio.com/console/dev-tools/api-keys",
+      "required": true
+    },
+    "TWILIO_SYNC_SERVICE": {
+      "description":
+        "Your Twilio Sync Service SID. www.twilio.com/console/sync/services",
+      "required": true
+    }
+  }
+}
