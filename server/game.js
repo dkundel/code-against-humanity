@@ -3,7 +3,7 @@ const path = require('path');
 const { promisify } = require('util');
 const twilio = require('twilio');
 
-const NUM_OF_ROUNDS = 3;
+const NUM_OF_ROUNDS = parseInt(process.env.NUM_OF_ROUNDS) || 3;
 const SNIPPET_PATH = path.join(__dirname, '..', 'snippets');
 
 const client = twilio(
