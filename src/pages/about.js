@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import Code from 'material-ui/svg-icons/action/code';
 
 import { H3, MutedText } from '../components/common';
@@ -50,6 +52,11 @@ class About extends Component {
             primary
             icon={<Code />}
           />
+        </Center>
+        <Center>
+          <Link to="/">
+            <FlatButton label="Back to the Game" />
+          </Link>
         </Center>
       </Paper>
     );
