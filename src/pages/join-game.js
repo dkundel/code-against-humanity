@@ -8,6 +8,7 @@ import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 import { red500, grey500, grey800, white } from 'material-ui/styles/colors';
 
@@ -19,11 +20,14 @@ class JoinGame extends Component {
     super(...args);
     this.state = {
       roomId: '',
-      username: ''
+      username: '',
+      showAlert: false,
+      errorMessage: undefined
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.joinGame = this.joinGame.bind(this);
+    this.handleErrorMessageClose = this.handleErrorMessageClose.bind(this);
   }
 
   handleInputChange(evt) {
@@ -55,7 +59,7 @@ class JoinGame extends Component {
 
     if (!resp.ok) {
       const msg = await resp.text();
-      console.error(msg);
+      this.setState({ showAlert: true, errorMessage: msg });
       return;
     }
 
@@ -63,6 +67,13 @@ class JoinGame extends Component {
     localStorage.setItem(`user:${data.roomId}`, data.username);
     history.push(`/game/${data.roomId}`);
   }
+
+  handleErrorMessageClose = () => {
+    this.setState({
+      showAlert: false,
+      errorMessage: undefined
+    });
+  };
 
   render() {
     return (
@@ -92,6 +103,12 @@ class JoinGame extends Component {
         <Link to="/">
           <FlatButton fullWidth label="Cancel" />
         </Link>
+        <Snackbar
+          open={this.state.showAlert}
+          message={this.state.errorMessage}
+          autoHideDuration={4000}
+          onRequestClose={this.handleErrorMessageClose}
+        />
       </Paper>
     );
   }

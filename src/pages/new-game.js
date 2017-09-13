@@ -6,6 +6,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 import { red500, grey500, grey800, white } from 'material-ui/styles/colors';
 
 import { H3, MutedText } from '../components/common';
@@ -15,11 +16,14 @@ class NewGame extends Component {
   constructor(...args) {
     super(...args);
     this.state = {
-      username: ''
+      username: '',
+      showAlert: false,
+      errorMessage: undefined
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.createGame = this.createGame.bind(this);
+    this.handleErrorMessageClose = this.handleErrorMessageClose.bind(this);
   }
 
   handleInputChange(evt) {
@@ -42,7 +46,7 @@ class NewGame extends Component {
 
     if (!resp.ok) {
       const msg = await resp.text();
-      console.error(msg);
+      this.setState({ showAlert: true, errorMessage: msg });
       return;
     }
 
@@ -50,6 +54,13 @@ class NewGame extends Component {
     localStorage.setItem(`user:${roomId}`, username);
     history.push(`/game/${roomId}`);
   }
+
+  handleErrorMessageClose = () => {
+    this.setState({
+      showAlert: false,
+      errorMessage: undefined
+    });
+  };
 
   render() {
     return (
@@ -72,6 +83,13 @@ class NewGame extends Component {
         <Link to="/">
           <FlatButton fullWidth label="Cancel" />
         </Link>
+
+        <Snackbar
+          open={this.state.showAlert}
+          message={this.state.errorMessage}
+          autoHideDuration={4000}
+          onRequestClose={this.handleErrorMessageClose}
+        />
       </Paper>
     );
   }
