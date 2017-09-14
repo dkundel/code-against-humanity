@@ -1,0 +1,14 @@
+TITLE: Snippet #6
+LANGUAGE: javascript
+CODE:
+fetch('/info')
+.then(resp => 
+{
+  return resp.json()}
+)
+.then(data =>{console.log(data)}).catch(function (err) {
+  console.error(
+    err)
+}
+)
+// ???

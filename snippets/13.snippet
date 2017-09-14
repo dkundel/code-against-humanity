@@ -1,0 +1,9 @@
+TITLE: Snippet #13
+LANGUAGE: c++
+CODE:
+void get_tomorrow_date( struct timeval *date )
+{
+  // ???
+  sleep( 86400 ); // 60 * 60 * 24
+  gettimeofday( date, 0 );
+}
