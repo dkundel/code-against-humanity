@@ -25,7 +25,8 @@
     "styled-components": "^2.1.2",
     "twilio": "^3.6.5",
     "twilio-common": "^0.1.7",
-    "twilio-sync": "^0.5.10"
+    "twilio-sync": "^0.5.10",
+    "snyk": "^1.52.1"
   },
   "proxy": "http://localhost:4000",
   "nodemonConfig": {
@@ -43,11 +44,14 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "postinstall": "npm run build",
-    "copyenv": "ncp .env.example .env"
+    "copyenv": "ncp .env.example .env",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "devDependencies": {
     "ncp": "^2.0.0",
     "node-env-run": "^2.0.1",
     "nodemon": "^1.12.0"
-  }
+  },
+  "snyk": true
 }
