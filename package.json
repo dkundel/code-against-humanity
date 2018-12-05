@@ -8,9 +8,9 @@
     "node": "~8.4.0"
   },
   "dependencies": {
-    "body-parser": "^1.17.2",
+    "body-parser": "^1.18.2",
     "event-emitter": "^0.3.5",
-    "express": "^4.15.4",
+    "express": "^4.16.0",
     "if-env": "^1.0.0",
     "lodash-es": "^4.17.4",
     "material-ui": "^0.19.1",
@@ -23,10 +23,10 @@
     "react-scripts": "1.1.1",
     "react-syntax-highlighter": "^5.7.0",
     "styled-components": "^2.1.2",
-    "twilio": "^3.6.5",
+    "twilio": "^3.17.1",
     "twilio-common": "^0.1.7",
     "twilio-sync": "^0.5.10",
-    "snyk": "^1.52.1"
+    "snyk": "^1.114.0"
   },
   "proxy": "http://localhost:4000",
   "nodemonConfig": {
@@ -46,7 +46,8 @@
     "postinstall": "npm run build",
     "copyenv": "ncp .env.example .env",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "npm run snyk-protect",
+    "prepare": "npm run snyk-protect"
   },
   "devDependencies": {
     "ncp": "^2.0.0",
