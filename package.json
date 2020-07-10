@@ -23,7 +23,7 @@
     "react-scripts": "1.1.1",
     "react-syntax-highlighter": "^5.7.0",
     "styled-components": "^2.1.2",
-    "twilio": "^3.6.5",
+    "twilio": "^3.16.0",
     "twilio-common": "^0.1.7",
     "twilio-sync": "^0.5.10",
     "snyk": "^1.52.1"
