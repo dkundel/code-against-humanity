@@ -25,7 +25,7 @@
     "styled-components": "^2.1.2",
     "twilio": "^3.6.5",
     "twilio-common": "^0.1.7",
-    "twilio-sync": "^0.5.10",
+    "twilio-sync": "^0.10.3",
     "snyk": "^1.52.1"
   },
   "proxy": "http://localhost:4000",
