@@ -12,7 +12,7 @@
     "event-emitter": "^0.3.5",
     "express": "^4.15.4",
     "if-env": "^1.0.0",
-    "lodash-es": "^4.17.4",
+    "lodash-es": "^4.17.21",
     "material-ui": "^0.19.1",
     "npm-run-all": "^4.1.1",
     "query-string": "^5.0.0",
